@@ -304,27 +304,3 @@ const easterEggOffers = async (id, account, offers) => {
     }
     return offers;
 }
-
-const easterEggOffers = async (id, account, offers) => {
-    try {
-        const sawEasterEgg = isSameDay(user.lastSawEasterEgg, date.now());
-        const isApril1st = new Date().getMonth() === 3 && new date().getDate() === 1;
-        const user = getUser(id, account);
-        const _offers = { ...offers, offer: [...offers.offers] };
-        if (isApril1st && !sawEasterEgg) {
-            
-            for (const [i , uuid] of Object.entries(_offers.offers)) {
-                const skin = await getSkin(uuid);
-                const defaultskin = await getSkinFromSkinUuid(skin.defaultSkinUuid);
-                _offers.offers[i] = defaultSkin.uuid;
-            }
-
-            user.lastSawEasterEgg= Date.now();
-            saveUser(user);
-            return _offers
-        }
-    } catch (e) {
-        console.error(e);
-    }
-    return offers;
-}
